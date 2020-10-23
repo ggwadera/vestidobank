@@ -6,6 +6,7 @@ import com.dh.vestidobank.model.dto.update.ClienteUpdateDTO;
 import com.dh.vestidobank.model.entity.Cliente;
 import com.dh.vestidobank.model.entity.Usuario;
 import com.dh.vestidobank.service.ClienteService;
+import com.dh.vestidobank.service.GerenteService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,8 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     @PatchMapping("/{id}/alterarLimite")
-    public ResponseEntity<Void> ativar(@PathVariable Long id, @Valid @RequestBody ValorOperacao valor) {
-        this.clienteService.alterarLimite(id, valor);
+    public ResponseEntity<Void> alterarLimite(@PathVariable Long id, @Valid @RequestBody ValorOperacao valor, @AuthenticationPrincipal Usuario usuario) {
+        this.clienteService.alterarLimite(id, valor, usuario.getUsername());
         return ResponseEntity.noContent().build();
     }
 

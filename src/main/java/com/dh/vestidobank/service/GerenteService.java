@@ -47,6 +47,11 @@ public class GerenteService {
 		return this.gerenteRepository.findById(id)
 				.orElseThrow(() -> new ObjectNotFoundException("Gerente de id " + id + " não foi encontrado"));
 	}
+
+	public Gerente findByEmail(String email) {
+		return this.gerenteRepository.findByEmail(email)
+				.orElseThrow(() -> new ObjectNotFoundException("Gerente de email " + email + " não foi encontrado"));
+	}
 	
 	public List<Gerente> findAll(){
 		return this.gerenteRepository.findAll();

@@ -22,14 +22,16 @@ public class ClienteService {
 
     private final ClienteRepository clienteRepository;
     private final ContaService contaService;
+    private final GerenteService gerenteService;
     private final BCryptPasswordEncoder passwordEncoder;
 
 
-    public void alterarLimite(Long id, ValorOperacao valor) {
+    public void alterarLimite(Long id, ValorOperacao valor, String emailGerente) {
         // todo se o cliente é do gerente logado
 
         Cliente cliente = this.findById(id);
-        if (cliente.isAtivo()) {
+        Gerente gerente = gerenteService.findByEmail(emailGerente);
+        if (cliente.isAtivo() && cliente.getGerente().equals(gerente)) {
             this.contaService.alterarLimite(cliente.getConta(), valor.getValor());
         } else {
             throw new DataIntegrityException("Aguardando aprovação do gerente");
